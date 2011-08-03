@@ -39,11 +39,25 @@ ggplot(data[data$x < 90, ], aes(x=x, y=nqx, group=sex)) + geom_line(aes(color=se
 ggplot(data, aes(x=x, y=nqx, group=sex)) + geom_line(aes(color=sex), size=1.5, alpha=0.7) + geom_point(aes(color=sex), cex=3, alpha=0.7) + opts(title="全体") + scale_colour_manual(values = c("#4600FF", "#FF00BF")) + xlab("年齢") + ylab("死亡率")
 
 
+#------生存数
+#---全年齢
+ggplot(data, aes(x=x, y=lx, group=sex)) + geom_step(aes(color=sex), cex=1.5) + 
+	scale_colour_manual(values = c("#4600FF", "#FF00BF")) + xlab("年齢") + ylab("生存数（人）") + 
+	scale_y_continuous(breaks = seq(2e+4, 1e+5, by=2e+4),
+	labels = c("20,000", "40,000", "60,000", "80,000", "100,000"))
 
 
-#------死亡率計算チェック
+
+#------計算チェック
 names(data)
-data$ndx / data$lx
 
+#---死亡率
+data$nqx1 <- data$ndx / data$lx
+
+#---生存数
+data$lx1 <- data$lx - data$ndx
+
+#---平均余命
+data$ex1 <- data$Tx / data$lx
 
 
