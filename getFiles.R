@@ -1,9 +1,8 @@
-getFiles <- function(trglist, dir=tempdir()){
+getFiles <- function(trglist, dir, wgetpath=NULL){
   #wget csv/xls files from MHLW to temporary directory 
-
-  tmpd <- dir #download directory
-  
-  wg <- "D:/wget-1.11.4-1-bin/bin/wget" #wget path
-
-  lapply(trglist, function(x)shell(sprintf("cd %s & %s -r %s" ,tmpd, wg, x)))
+  if(is.null(wgetpath)){
+    stop("Please input wget-path ----> e.g. D:/wget-1.11.4-1-bin/bin")
+    }else{
+    lapply(trglist, function(x)shell(sprintf("cd %s & %s/wget --max-redirect=1 %s" ,dir , wgetpath, x)))
+    }
   }
