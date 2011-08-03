@@ -7,3 +7,6 @@ getFiles <- function(trglist, dir=tempdir()){
 
   lapply(trglist, function(x)shell(sprintf("cd %s & %s -r %s" ,tmpd, wg, x)))
   }
+
+
+#test1
