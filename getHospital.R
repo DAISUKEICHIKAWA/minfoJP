@@ -1,3 +1,6 @@
+#wgetpathは "D:/wget-1.11.4-1-bin/bin/"のような形でwgetの入っているディレクトリを指定する
+#とりあえず2011年1月以降のデータについては動作確認済
+
 getHospital <- function(year, month, wgetpath){
   require(XLConnect)
   require(ggplot2)
@@ -17,7 +20,7 @@ getHospital <- function(year, month, wgetpath){
   res <- subset(res[, -5], complete.cases(res[,-5]))
   ynum <- c(grep(".+\\n", res[,1]), Inf) -1 #年の区切りベクトル
   ylab <- gsub(".+\\n", "", res[grep(".+\\n", res[,1]), 1]) #年のラベル
-  year <- cut(1:nrow(res), breaks=yearnum, labels=ylab) #区切りベクトルに従って年ラベルを生成
+  year <- cut(1:nrow(res), breaks=ynum, labels=ylab) #区切りベクトルに従って年ラベルを生成
   res[,1] <- as.integer(gsub("\\n.+", "", res[,1])) #月ベクトルに変換
   res <- apply(res, 2, as.numeric)
   res <- data.frame(year, res)
